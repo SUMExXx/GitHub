@@ -14,30 +14,30 @@ const config: ForgeConfig = {
   packagerConfig: {
     asar: true,
     icon: './public/Github.ico',
-    name: 'AIOne',
-    appBundleId: 'com.sumexxx.aione',
-    executableName: 'AIOne',
+    name: 'Github',
+    appBundleId: 'com.sumexxx.github',
+    executableName: 'Github',
     overwrite: true, 
   },
   rebuildConfig: {},
   makers: [
     new MakerSquirrel({
       setupIcon: './public/Github.ico',
-      name: 'AIOne',
-      title: 'AIOne',
+      name: 'Github',
+      title: 'Github',
       noMsi: false,
-      description: 'AIOne - All-in-one AI Desktop App',
+      description: 'Github',
       authors: 'Suman Debnath',
-      exe: 'AIOne.exe',
-      setupExe: 'AIOneInstaller.exe',
-      setupMsi: 'AIOneInstaller.msi',
+      exe: 'Github.exe',
+      setupExe: 'GithubInstaller.exe',
+      setupMsi: 'GithubInstaller.msi',
       iconUrl: 'https://sumexxx.github.io/Github/Github.ico'
     }),
     new MakerZIP({}, ['darwin']),
     new MakerRpm({
       options: {
-        description: 'AIOne - All-in-one AI Desktop App',
-        homepage: 'https://sumexxx.github.io/AIOne/', 
+        description: 'Github',
+        homepage: 'https://sumexxx.github.io/Github/', 
         license: 'MIT',
         icon: './public/Github.ico',
       },
@@ -46,8 +46,8 @@ const config: ForgeConfig = {
     new MakerDeb({
       options: {
         icon: './public/Github.ico',
-        homepage: 'https://sumexxx.github.io/AIOne/',
-        description: 'AIOne - All-in-one AI Desktop App',
+        homepage: 'https://sumexxx.github.io/Github/',
+        description: 'Github',
         maintainer: 'Suman Debnath <sumexxx666@gmail.com>',                                    
         section: 'utils',                         
         depends: ['libgtk-3-0', 'libnotify4'],
