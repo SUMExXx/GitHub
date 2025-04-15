@@ -1,7 +1,7 @@
 {
   "name": "GitHub",
   "productName": "GitHub",
-  "version": "1.2.0",
+  "version": "1.0.0",
   "description": "Github Desktop App",
   "main": ".webpack/main",
   "scripts": {

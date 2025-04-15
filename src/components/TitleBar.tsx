@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Subtract16Regular, Dismiss16Regular, ArrowDownload16Regular, ChevronLeft16Regular, ChevronRight16Regular, ArrowClockwise16Filled, ArrowClockwise16Regular } from "@fluentui/react-icons";
+import { Subtract16Regular, Dismiss16Regular, ArrowDownload16Regular, ChevronLeft16Regular, ChevronRight16Regular, ArrowClockwise16Filled, ArrowClockwise16Regular, ArrowLeft16Regular, ArrowRight16Regular, ClipboardCheckmark16Regular, Copy16Regular } from "@fluentui/react-icons";
 import { github } from "../utils/github";
 import MaximizeButton from "./MaximizeButton";
 import { env } from "../utils/env";
@@ -20,9 +20,40 @@ const TitleBar: React.FC = () => {
         }
     };
 
+    const handleBackClick = () => {
+        const webview = document.getElementById('webview') as Electron.WebviewTag;
+        if (webview && webview.canGoBack()) {
+            webview.goBack();
+        }
+    };
+
+    const handleForwardClick = () => {
+        const webview = document.getElementById('webview') as Electron.WebviewTag;
+        if (webview && webview.canGoBack()) {
+            webview.goForward();
+        }
+    };
+
+    const [copyStatus, setCopyStatus] = useState<boolean>(false);
+
+    const copyCurrentLinkToClipboard = () => {
+        const webview = document.getElementById('webview') as Electron.WebviewTag;
+        if (webview && webview.getURL()) {
+            const currentURL = webview.getURL();
+            navigator.clipboard.writeText(currentURL)
+            .then(() => {
+                setCopyStatus(true);
+                setTimeout(() => {
+                    setCopyStatus(false);
+                }, 2000); // Reset after 2 seconds
+            })
+            .catch((err) => console.error('Failed to copy:', err));
+        }
+    };
+
     const [updateStatus, setUpdateStatus] = useState<boolean>(false);
     const checkUpdate = () => {
-        fetch("https://api.github.com/repos/SUMExXx/AIOne/releases/latest").then((response) => {
+        fetch("https://api.github.com/repos/SUMExXx/GitHub/releases/latest").then((response) => {
             if (response.ok) {
                 response.json().then((data) => {
                     if (data.tag_name !== env.TAG) {
@@ -87,8 +118,17 @@ const TitleBar: React.FC = () => {
                         draggable="false"
                     />
                 </div>
+                <button type="button" title="Back" onClick={handleBackClick} className="text-ui dark:text-ui-dark dark:hover:bg-uiHover-dark h-full px-[16px] transition-colors duration-200 hover:bg-uiHover flex items-center justify-center outline-none" style={{ WebkitAppRegion: "no-drag" } as React.CSSProperties}>
+                    <ArrowLeft16Regular />
+                </button>
                 <button type="button" title="Minimize" onClick={handleRefresh} className="text-ui dark:text-ui-dark dark:hover:bg-uiHover-dark h-full px-[16px] transition-colors duration-200 hover:bg-uiHover flex items-center justify-center outline-none" style={{ WebkitAppRegion: "no-drag" } as React.CSSProperties}>
                     <ArrowClockwise16Regular />
+                </button>
+                <button type="button" title="Forward" onClick={handleForwardClick} className="text-ui dark:text-ui-dark dark:hover:bg-uiHover-dark h-full px-[16px] transition-colors duration-200 hover:bg-uiHover flex items-center justify-center outline-none" style={{ WebkitAppRegion: "no-drag" } as React.CSSProperties}>
+                    <ArrowRight16Regular />
+                </button>
+                <button type="button" title="Forward" onClick={copyCurrentLinkToClipboard} className="text-ui dark:text-ui-dark dark:hover:bg-uiHover-dark h-full px-[16px] transition-colors duration-200 hover:bg-uiHover flex items-center justify-center outline-none" style={{ WebkitAppRegion: "no-drag" } as React.CSSProperties}>
+                    {copyStatus? <ClipboardCheckmark16Regular /> : <Copy16Regular />}
                 </button>
             </div>
 
